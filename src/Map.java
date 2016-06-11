@@ -1,6 +1,8 @@
 
+import java.awt.Color;
 import java.awt.Image;
 import java.io.IOException;
+import static java.lang.Math.abs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -132,15 +134,13 @@ public class Map extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(Pos11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(Pos12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Pos20, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Pos21, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Pos22, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Pos12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Pos20, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Pos21, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Pos22, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -161,7 +161,7 @@ public class Map extends javax.swing.JFrame {
                     .addComponent(Pos20, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Pos21, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Pos22, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -230,12 +230,127 @@ public class Map extends javax.swing.JFrame {
             game[x][y]='o';
         }
         b.setEnabled(false);
+        if(win(x,y))end();
     }
     
-    /*private boolean test(int x,int y){
-        
+    private boolean win(int x, int y){
+        char[] sudo={'x','o'};
+        if(abs(x-y)%2==0&&x!=1){
+            if(game[x][y]==sudo[TURN%2]&&game[(x+1)%3][y]==sudo[TURN%2]&&game[(x+2)%3][y]==sudo[TURN%2]){
+                setWon(x,y);
+                setWon((x+1)%3,y);
+                setWon((x+2)%3,y);
+                return true;
+            }else if(game[x][y]==sudo[TURN%2]&&game[x][(y+1)%3]==sudo[TURN%2]&&game[x][(y+2)%3]==sudo[TURN%2]){
+                setWon(x,y);
+                setWon(x,(y+1)%3);
+                setWon(x,(y+2)%3);
+                return true;
+            }
+            if(abs(x-y)==0){
+                if(game[x][y]==sudo[TURN%2]&&game[(x+1)%3][(y+1)%3]==sudo[TURN%2]&&game[(x+2)%3][(y+2)%3]==sudo[TURN%2]){
+                    setWon(x,y);
+                    setWon((x+1)%3,(y+1)%3);
+                    setWon((x+2)%3,(y+2)%3);
+                    return true;
+                }
+            }else{
+                if(game[x][y]==sudo[TURN%2]&&game[abs(x-1)%3][abs(y-1)%3]==sudo[TURN%2]&&game[abs(x-2)%3][abs(y-2)%3]==sudo[TURN%2]){
+                    setWon(x,y);
+                    setWon(abs(x-1)%3,abs(y-1)%3);
+                    setWon(abs(x-2)%3,abs(y-2)%3);
+                    return true;
+                }
+            }
+            
+        }else if(abs(x-y)%2==1){
+            if(game[x][y]==sudo[TURN%2]&&game[(x+1)%3][y]==sudo[TURN%2]&&game[(x+2)%3][y]==sudo[TURN%2]){
+                setWon(x,y);
+                setWon((x+1)%3,y);
+                setWon((x+2)%3,y);
+                return true;
+            }else if(game[x][y]==sudo[TURN%2]&&game[x][(y+1)%3]==sudo[TURN%2]&&game[x][(y+2)%3]==sudo[TURN%2]){
+                setWon(x,y);
+                setWon(x,(y+1)%3);
+                setWon(x,(y+2)%3);
+                return true;
+            }
+        }else{
+            if(game[1][0]==sudo[TURN%2]&&game[1][1]==sudo[TURN%2]&&game[1][2]==sudo[TURN%2]){
+                setWon(1,0);
+                setWon(1,1);
+                setWon(1,2);
+                return true;
+            }else if(game[0][1]==sudo[TURN%2]&&game[1][1]==sudo[TURN%2]&&game[2][1]==sudo[TURN%2]){
+                setWon(0,1);
+                setWon(1,1);
+                setWon(2,1);
+                return true;
+            }else if(game[0][0]==sudo[TURN%2]&&game[1][1]==sudo[TURN%2]&&game[2][2]==sudo[TURN%2]){
+                setWon(0,0);
+                setWon(1,1);
+                setWon(2,2);
+                return true;
+            }else if(game[2][0]==sudo[TURN%2]&&game[1][1]==sudo[TURN%2]&&game[0][2]==sudo[TURN%2]){
+                setWon(2,0);
+                setWon(1,1);
+                setWon(0,2);
+                return true;
+            }
+        }
         return false;
-    }*/
+    }
+    
+    private void setWon(int x,int y){
+        if(x==0&&y==0){
+            Pos00.setBackground(Color.red);
+            Pos00.setOpaque(true);
+        }
+        if(x==0&&y==1){
+            Pos01.setBackground(Color.red);
+            Pos01.setOpaque(true);
+        }
+        if(x==0&&y==2){
+            Pos02.setBackground(Color.red);
+            Pos02.setOpaque(true);
+        }
+        if(x==1&&y==0){
+            Pos10.setBackground(Color.red);
+            Pos10.setOpaque(true);
+        }
+        if(x==1&&y==1){
+            Pos11.setBackground(Color.red);
+            Pos11.setOpaque(true);
+        }
+        if(x==1&&y==2){
+            Pos12.setBackground(Color.red);
+            Pos12.setOpaque(true);
+        }
+        if(x==2&&y==0){
+            Pos20.setBackground(Color.red);
+            Pos20.setOpaque(true);
+        }
+        if(x==2&&y==1){
+            Pos21.setBackground(Color.red);
+            Pos21.setOpaque(true);
+        }
+        if(x==2&&y==2){
+            Pos22.setBackground(Color.red);
+            Pos22.setOpaque(true);
+        }
+    }
+    
+    private void end(){
+        Pos00.setEnabled(false);
+        Pos01.setEnabled(false);
+        Pos02.setEnabled(false);
+        Pos10.setEnabled(false);
+        Pos11.setEnabled(false);
+        Pos12.setEnabled(false);
+        Pos20.setEnabled(false);
+        Pos21.setEnabled(false);
+        Pos22.setEnabled(false);
+    }
     
     /**
      * @param args the command line arguments
