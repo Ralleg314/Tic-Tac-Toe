@@ -24,6 +24,7 @@ public class Map extends javax.swing.JFrame {
     private Image X;
     private Image O;
     private char[][] game;
+    private JButton[] Buttons;
 
     /**
      * Creates new form Map
@@ -39,6 +40,7 @@ public class Map extends javax.swing.JFrame {
             Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        this.Buttons = new JButton[]{Pos00,Pos01,Pos02,Pos10,Pos11,Pos12,Pos20,Pos21,Pos22};
     }
 
     /**
@@ -302,54 +304,14 @@ public class Map extends javax.swing.JFrame {
     }
     
     private void setWon(int x,int y){
-        if(x==0&&y==0){
-            Pos00.setBackground(Color.red);
-            Pos00.setOpaque(true);
-        }
-        if(x==0&&y==1){
-            Pos01.setBackground(Color.red);
-            Pos01.setOpaque(true);
-        }
-        if(x==0&&y==2){
-            Pos02.setBackground(Color.red);
-            Pos02.setOpaque(true);
-        }
-        if(x==1&&y==0){
-            Pos10.setBackground(Color.red);
-            Pos10.setOpaque(true);
-        }
-        if(x==1&&y==1){
-            Pos11.setBackground(Color.red);
-            Pos11.setOpaque(true);
-        }
-        if(x==1&&y==2){
-            Pos12.setBackground(Color.red);
-            Pos12.setOpaque(true);
-        }
-        if(x==2&&y==0){
-            Pos20.setBackground(Color.red);
-            Pos20.setOpaque(true);
-        }
-        if(x==2&&y==1){
-            Pos21.setBackground(Color.red);
-            Pos21.setOpaque(true);
-        }
-        if(x==2&&y==2){
-            Pos22.setBackground(Color.red);
-            Pos22.setOpaque(true);
-        }
+        Buttons[3*x+y].setBackground(Color.red);
+        Buttons[3*x+y].setOpaque(true);
     }
     
     private void end(){
-        Pos00.setEnabled(false);
-        Pos01.setEnabled(false);
-        Pos02.setEnabled(false);
-        Pos10.setEnabled(false);
-        Pos11.setEnabled(false);
-        Pos12.setEnabled(false);
-        Pos20.setEnabled(false);
-        Pos21.setEnabled(false);
-        Pos22.setEnabled(false);
+        for(JButton b:Buttons){
+            b.setEnabled(false);
+        }
     }
     
     /**
