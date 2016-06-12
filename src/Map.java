@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.io.IOException;
 import static java.lang.Math.abs;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -41,6 +42,11 @@ public class Map extends javax.swing.JFrame {
         }
         initComponents();
         this.Buttons = new JButton[]{Pos00,Pos01,Pos02,Pos10,Pos11,Pos12,Pos20,Pos21,Pos22};
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                Buttons[3*i+j].setName(""+i+j);
+            }
+        }
     }
 
     /**
@@ -66,55 +72,55 @@ public class Map extends javax.swing.JFrame {
 
         Pos01.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos01ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
         Pos00.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos00ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
         Pos02.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos02ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
         Pos11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos11ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
         Pos10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos10ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
         Pos12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos12ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
         Pos21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos21ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
         Pos20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos20ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
         Pos22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Pos22ActionPerformed(evt);
+                ActionPerformed(evt);
             }
         });
 
@@ -169,61 +175,17 @@ public class Map extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Pos00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos00ActionPerformed
+    private void ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActionPerformed
         // TODO add your handling code here:
-        this.modify(Pos00,0,0);
+        if(Arrays.asList(Buttons).contains((JButton)evt.getSource())){
+            modify((JButton) evt.getSource());
+        }
         TURN++;
-    }//GEN-LAST:event_Pos00ActionPerformed
+    }//GEN-LAST:event_ActionPerformed
 
-    private void Pos01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos01ActionPerformed
-        // TODO add your handling code here:
-        this.modify(Pos01,0,1);
-        TURN++;
-    }//GEN-LAST:event_Pos01ActionPerformed
-
-    private void Pos02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos02ActionPerformed
-        // TODO add your handling code here:
-        this.modify(Pos02,0,2);
-        TURN++;
-    }//GEN-LAST:event_Pos02ActionPerformed
-
-    private void Pos10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos10ActionPerformed
-        // TODO add your handling code here:
-        this.modify(Pos10,1,0);
-        TURN++;
-    }//GEN-LAST:event_Pos10ActionPerformed
-
-    private void Pos11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos11ActionPerformed
-        // TODO add your handling code here:
-        this.modify(Pos11,1,1);
-        TURN++;
-    }//GEN-LAST:event_Pos11ActionPerformed
-
-    private void Pos12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos12ActionPerformed
-        // TODO add your handling code here:
-        this.modify(Pos12,1,2);
-        TURN++;
-    }//GEN-LAST:event_Pos12ActionPerformed
-
-    private void Pos20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos20ActionPerformed
-        // TODO add your handling code here:
-        this.modify(Pos20,2,0);
-        TURN++;
-    }//GEN-LAST:event_Pos20ActionPerformed
-
-    private void Pos21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos21ActionPerformed
-        // TODO add your handling code here:
-        this.modify(Pos21,2,1);
-        TURN++;
-    }//GEN-LAST:event_Pos21ActionPerformed
-
-    private void Pos22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pos22ActionPerformed
-        // TODO add your handling code here:
-        this.modify(Pos22,2,2);
-        TURN++;
-    }//GEN-LAST:event_Pos22ActionPerformed
-
-    private void modify(JButton b,int x,int y){
+    private void modify(JButton b){
+        int x=Integer.parseInt(b.getName().substring(0,1));
+        int y=Integer.parseInt(b.getName().substring(1));
         if (TURN % 2 == 0) {
             b.setIcon(new ImageIcon(X));
             game[x][y]='x';
@@ -232,7 +194,7 @@ public class Map extends javax.swing.JFrame {
             game[x][y]='o';
         }
         b.setEnabled(false);
-        if(win(x,y))end();
+        if(TURN>3)if(win(x,y))end();
     }
     
     private boolean win(int x, int y){
