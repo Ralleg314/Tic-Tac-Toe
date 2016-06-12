@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -50,6 +51,15 @@ public class Map extends javax.swing.JFrame {
         }
     }
 
+    public void restart(){
+        game=new char[3][3];
+        for(JButton b:Buttons){
+            b.setEnabled(true);
+            b.setIcon(null);
+            b.setBackground(null);
+        }
+        TURN=1;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -278,6 +288,9 @@ public class Map extends javax.swing.JFrame {
         for(JButton b:Buttons){
             b.setEnabled(false);
         }
+        JDialog d=new Restart(this,true);
+        d.setVisible(true);
+        restart();
     }
     
     /**
