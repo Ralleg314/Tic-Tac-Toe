@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.Arrays;
@@ -69,6 +70,8 @@ public class Map extends javax.swing.JFrame {
         Pos22 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tic-Tac-Toe");
+        setLocation(new java.awt.Point(0, 0));
 
         Pos01.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +176,7 @@ public class Map extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActionPerformed
