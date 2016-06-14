@@ -209,6 +209,7 @@ public class Map extends javax.swing.JFrame {
         }
         b.setEnabled(false);
         if(TURN>3)if(win(x,y))end();
+        //if(TURN==11)end();
     }
     
     private boolean win(int x, int y){
