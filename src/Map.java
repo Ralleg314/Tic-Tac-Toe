@@ -46,7 +46,7 @@ public class Map extends javax.swing.JFrame {
         this.Buttons = new JButton[]{Pos00,Pos01,Pos02,Pos10,Pos11,Pos12,Pos20,Pos21,Pos22};
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
-                Buttons[3*i+j].setName(""+i+j);
+                Buttons[3*i+j].setName(""+i+j);//If it looks stupid, but it works, it's not stupid.
             }
         }
     }
