@@ -37,14 +37,14 @@ public class Restart extends javax.swing.JDialog {
 
         jLabel1.setText("Do you want to play again?");
 
-        btnYes.setText("Hell yeah!");
+        btnYes.setText("Yes!");
         btnYes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnYesActionPerformed(evt);
             }
         });
 
-        btnNo.setText("Nope");
+        btnNo.setText("No");
         btnNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNoActionPerformed(evt);
