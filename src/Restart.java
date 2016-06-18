@@ -12,6 +12,8 @@ public class Restart extends javax.swing.JDialog {
 
     /**
      * Creates new form Restart
+     * @param parent
+     * @param modal
      */
     public Restart(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

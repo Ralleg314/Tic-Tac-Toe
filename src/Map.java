@@ -42,23 +42,27 @@ public class Map extends javax.swing.JFrame {
             Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        this.Buttons = new JButton[]{Pos00,Pos01,Pos02,Pos10,Pos11,Pos12,Pos20,Pos21,Pos22};
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                Buttons[3*i+j].setName(""+i+j);//If it looks stupid, but it works, it's not stupid.
+        this.Buttons = new JButton[]{Pos00, Pos01, Pos02, Pos10, Pos11, Pos12, Pos20, Pos21, Pos22};
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                Buttons[3 * i + j].setName("" + i + j);//If it looks stupid, but it works, it's not stupid.
             }
         }
     }
 
-    public void restart(){
-        game=new char[3][3];//Resets the matrix
-        for(JButton b:Buttons){
+    /**
+     *
+     */
+    public void restart() {
+        game = new char[3][3];//Resets the matrix
+        for (JButton b : Buttons) {
             b.setEnabled(true);//Enables again all the buttons
             b.setIcon(null);
             b.setBackground(null);
         }
-        TURN=-1;//Because, at the end of ActionPerformed, it adds 1 to TURN
+        TURN = -1;//Because, at the end of ActionPerformed, it adds 1 to TURN
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -190,109 +194,95 @@ public class Map extends javax.swing.JFrame {
 
     private void ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActionPerformed
         // TODO add your handling code here:
-        if(Arrays.asList(Buttons).contains((JButton)evt.getSource())){
+        if (Arrays.asList(Buttons).contains((JButton) evt.getSource())) {
             modify((JButton) evt.getSource());
         }
         TURN++;
     }//GEN-LAST:event_ActionPerformed
 
-    private void modify(JButton b){
-        int x=Integer.parseInt(b.getName().substring(0,1));
-        int y=Integer.parseInt(b.getName().substring(1));
+    private void modify(JButton b) {
+        int x = Integer.parseInt(b.getName().substring(0, 1));
+        int y = Integer.parseInt(b.getName().substring(1));
         if (TURN % 2 == 0) {
             b.setIcon(new ImageIcon(X));
-            game[x][y]='x';
+            game[x][y] = 'x';
         } else {
             b.setIcon(new ImageIcon(O));
-            game[x][y]='o';
+            game[x][y] = 'o';
         }
         b.setEnabled(false);
-        if(TURN>3)if(win(x,y))end();//We won't check the
-        if(TURN==8)end();//In case of draw (which happens most of the time) restarts too
-    }
-    
-    private boolean win(int x, int y){
-        char[] sudo={'x','o'};
-        if(abs(x-y)%2==0&&x!=1){
-            if(game[x][y]==sudo[TURN%2]&&game[(x+1)%3][y]==sudo[TURN%2]&&game[(x+2)%3][y]==sudo[TURN%2]){
-                setWon(x,y);
-                setWon((x+1)%3,y);
-                setWon((x+2)%3,y);
-                return true;
-            }else if(game[x][y]==sudo[TURN%2]&&game[x][(y+1)%3]==sudo[TURN%2]&&game[x][(y+2)%3]==sudo[TURN%2]){
-                setWon(x,y);
-                setWon(x,(y+1)%3);
-                setWon(x,(y+2)%3);
-                return true;
-            }
-            if(abs(x-y)==0){
-                if(game[x][y]==sudo[TURN%2]&&game[(x+1)%3][(y+1)%3]==sudo[TURN%2]&&game[(x+2)%3][(y+2)%3]==sudo[TURN%2]){
-                    setWon(x,y);
-                    setWon((x+1)%3,(y+1)%3);
-                    setWon((x+2)%3,(y+2)%3);
-                    return true;
-                }
-            }else{
-                if(game[x][y]==sudo[TURN%2]&&game[abs(x-1)%3][abs(y-1)%3]==sudo[TURN%2]&&game[abs(x-2)%3][abs(y-2)%3]==sudo[TURN%2]){
-                    setWon(x,y);
-                    setWon(abs(x-1)%3,abs(y-1)%3);
-                    setWon(abs(x-2)%3,abs(y-2)%3);
-                    return true;
-                }
-            }
-            
-        }else if(abs(x-y)%2==1){
-            if(game[x][y]==sudo[TURN%2]&&game[(x+1)%3][y]==sudo[TURN%2]&&game[(x+2)%3][y]==sudo[TURN%2]){
-                setWon(x,y);
-                setWon((x+1)%3,y);
-                setWon((x+2)%3,y);
-                return true;
-            }else if(game[x][y]==sudo[TURN%2]&&game[x][(y+1)%3]==sudo[TURN%2]&&game[x][(y+2)%3]==sudo[TURN%2]){
-                setWon(x,y);
-                setWon(x,(y+1)%3);
-                setWon(x,(y+2)%3);
-                return true;
-            }
-        }else{
-            if(game[1][0]==sudo[TURN%2]&&game[1][1]==sudo[TURN%2]&&game[1][2]==sudo[TURN%2]){
-                setWon(1,0);
-                setWon(1,1);
-                setWon(1,2);
-                return true;
-            }else if(game[0][1]==sudo[TURN%2]&&game[1][1]==sudo[TURN%2]&&game[2][1]==sudo[TURN%2]){
-                setWon(0,1);
-                setWon(1,1);
-                setWon(2,1);
-                return true;
-            }else if(game[0][0]==sudo[TURN%2]&&game[1][1]==sudo[TURN%2]&&game[2][2]==sudo[TURN%2]){
-                setWon(0,0);
-                setWon(1,1);
-                setWon(2,2);
-                return true;
-            }else if(game[2][0]==sudo[TURN%2]&&game[1][1]==sudo[TURN%2]&&game[0][2]==sudo[TURN%2]){
-                setWon(2,0);
-                setWon(1,1);
-                setWon(0,2);
-                return true;
-            }
+        if (TURN > 3) {
+            win(x, y);
         }
-        return false;
+        if (TURN == 8) {
+            end();//In case of draw (which happens most of the time) restarts too
+        }
     }
-    
-    private void setWon(int x,int y){
-        Buttons[3*x+y].setBackground(Color.red);
-        Buttons[3*x+y].setOpaque(true);
+
+    private void win(int x, int y) {
+        char[] sudo = {'x', 'o'};
+        int T = TURN % 2;
+        if (abs(x - y) % 2 == 0 && x != 1) {
+            if (game[x][y] == sudo[T] && game[(x + 1) % 3][y] == sudo[T] && game[(x + 2) % 3][y] == sudo[T]) {
+                markWin(x, y, (x + 1) % 3, y, (x + 2) % 3, y);
+                end();
+            } else if (game[x][y] == sudo[T] && game[x][(y + 1) % 3] == sudo[T] && game[x][(y + 2) % 3] == sudo[T]) {
+                markWin(x, y, x, (y + 1) % 3, x, (y + 2) % 3);
+                end();
+            }
+            if (abs(x - y) == 0) {
+                if (game[x][y] == sudo[T] && game[(x + 1) % 3][(y + 1) % 3] == sudo[T] && game[(x + 2) % 3][(y + 2) % 3] == sudo[T]) {
+                    markWin(x, y, (x + 1) % 3, (y + 1) % 3, (x + 2) % 3, (y + 2) % 3);
+                    end();
+                }
+            } else if (game[x][y] == sudo[T] && game[abs(x - 1) % 3][abs(y - 1) % 3] == sudo[T] && game[abs(x - 2) % 3][abs(y - 2) % 3] == sudo[T]) {
+                markWin(x, y, abs(x - 1) % 3, abs(y - 1) % 3, abs(x - 2) % 3, abs(y - 2) % 3);
+                end();
+            }
+
+        } else if (abs(x - y) % 2 == 1) {
+            if (game[x][y] == sudo[T] && game[(x + 1) % 3][y] == sudo[T] && game[(x + 2) % 3][y] == sudo[T]) {
+                markWin(x, y, (x + 1) % 3, y, (x + 2) % 3, y);
+                end();
+            } else if (game[x][y] == sudo[T] && game[x][(y + 1) % 3] == sudo[T] && game[x][(y + 2) % 3] == sudo[T]) {
+                markWin(x, y, x, (y + 1) % 3, x, (y + 2) % 3);
+                end();
+            }
+        } else if (game[1][0] == sudo[T] && game[1][1] == sudo[T] && game[1][2] == sudo[T]) {
+            markWin(1, 0, 1, 1, 1, 2);
+            end();
+        } else if (game[0][1] == sudo[T] && game[1][1] == sudo[T] && game[2][1] == sudo[T]) {
+            markWin(0, 1, 1, 1, 2, 1);
+            end();
+        } else if (game[0][0] == sudo[T] && game[1][1] == sudo[T] && game[2][2] == sudo[T]) {
+            markWin(0, 0, 1, 1, 2, 2);
+            end();
+        } else if (game[2][0] == sudo[T] && game[1][1] == sudo[T] && game[0][2] == sudo[T]) {
+            markWin(2, 0, 1, 1, 0, 2);
+            end();
+        }
     }
-    
-    private void end(){
-        for(JButton b:Buttons){
+
+    private void markWin(int x1, int y1, int x2, int y2, int x3, int y3) {
+        setWon(x1, y1);
+        setWon(x2, y2);
+        setWon(x3, y3);
+    }
+
+    private void setWon(int x, int y) {
+        Buttons[3 * x + y].setBackground(Color.red);
+        Buttons[3 * x + y].setOpaque(true);
+    }
+
+    private void end() {
+        for (JButton b : Buttons) {
             b.setEnabled(false);
         }
-        JDialog d=new Restart(this,true);
+        JDialog d = new Restart(this, true);
         d.setVisible(true);
         restart();
     }
-    
+
     /**
      * @param args the command line arguments
      */
