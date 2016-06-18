@@ -230,7 +230,7 @@ public class Map extends javax.swing.JFrame {
              */
             if (game[x][y] == sudo[T] && game[(x + 1) % 3][y] == sudo[T] && game[(x + 2) % 3][y] == sudo[T]) {
                 /**
-                 * ?|?|?
+                 * x|>|>
                  * ?|?|?
                  * ?|?|?
                  */
@@ -238,9 +238,9 @@ public class Map extends javax.swing.JFrame {
                 end();
             } else if (game[x][y] == sudo[T] && game[x][(y + 1) % 3] == sudo[T] && game[x][(y + 2) % 3] == sudo[T]) {
                 /**
-                 * ?|?|?
-                 * ?|?|?
-                 * ?|?|?
+                 * x|?|?
+                 * v|?|?
+                 * v|?|?
                  */
                 markWin(x, y, x, (y + 1) % 3, x, (y + 2) % 3);
                 end();
@@ -248,18 +248,18 @@ public class Map extends javax.swing.JFrame {
             if (abs(x - y) == 0) {
                 if (game[x][y] == sudo[T] && game[(x + 1) % 3][(y + 1) % 3] == sudo[T] && game[(x + 2) % 3][(y + 2) % 3] == sudo[T]) {
                     /**
-                     * ?|?|?
-                     * ?|?|?
-                     * ?|?|?
+                     * x|?|?
+                     * ?|\|?
+                     * ?|?|\
                      */
                     markWin(x, y, (x + 1) % 3, (y + 1) % 3, (x + 2) % 3, (y + 2) % 3);
                     end();
                 }
             } else if (game[x][y] == sudo[T] && game[abs(x - 1) % 3][abs(y - 1) % 3] == sudo[T] && game[abs(x - 2) % 3][abs(y - 2) % 3] == sudo[T]) {
                 /**
-                 * ?|?|?
-                 * ?|?|?
-                 * ?|?|?
+                 * ?|?|x
+                 * ?|/|?
+                 * /|?|?
                  */
                 markWin(x, y, abs(x - 1) % 3, abs(y - 1) % 3, abs(x - 2) % 3, abs(y - 2) % 3);
                 end();
@@ -273,7 +273,7 @@ public class Map extends javax.swing.JFrame {
              */
             if (game[x][y] == sudo[T] && game[(x + 1) % 3][y] == sudo[T] && game[(x + 2) % 3][y] == sudo[T]) {
                 /**
-                 * ?|?|?
+                 * <|x|>
                  * ?|?|?
                  * ?|?|?
                  */
@@ -281,9 +281,9 @@ public class Map extends javax.swing.JFrame {
                 end();
             } else if (game[x][y] == sudo[T] && game[x][(y + 1) % 3] == sudo[T] && game[x][(y + 2) % 3] == sudo[T]) {
                 /**
-                 * ?|?|?
-                 * ?|?|?
-                 * ?|?|?
+                 * ?|x|?
+                 * ?|v|?
+                 * ?|v|?
                  */
                 markWin(x, y, x, (y + 1) % 3, x, (y + 2) % 3);
                 end();
