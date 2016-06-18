@@ -1,7 +1,6 @@
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.Arrays;
@@ -23,11 +22,11 @@ import javax.swing.JDialog;
  */
 public class Map extends javax.swing.JFrame {
 
-    private static int TURN = 0;
+    private int TURN = 0;
     private Image X;
     private Image O;
     private char[][] game;
-    private JButton[] Buttons;
+    private final JButton[] Buttons;
 
     /**
      * Creates new form Map
@@ -52,13 +51,13 @@ public class Map extends javax.swing.JFrame {
     }
 
     public void restart(){
-        game=new char[3][3];
+        game=new char[3][3];//Resets the matrix
         for(JButton b:Buttons){
-            b.setEnabled(true);
+            b.setEnabled(true);//Enables again all the buttons
             b.setIcon(null);
             b.setBackground(null);
         }
-        TURN=1;
+        TURN=-1;//Because, at the end of ActionPerformed, it adds 1 to TURN
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -208,8 +207,8 @@ public class Map extends javax.swing.JFrame {
             game[x][y]='o';
         }
         b.setEnabled(false);
-        if(TURN>3)if(win(x,y))end();
-        //if(TURN==11)end();
+        if(TURN>3)if(win(x,y))end();//We won't check the
+        if(TURN==8)end();//In case of draw (which happens most of the time) restarts too
     }
     
     private boolean win(int x, int y){
