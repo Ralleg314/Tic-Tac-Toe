@@ -1,6 +1,5 @@
 
 import java.awt.Color;
-import java.awt.Image;
 import java.io.IOException;
 import static java.lang.Math.abs;
 import java.util.Arrays;
