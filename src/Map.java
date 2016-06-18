@@ -223,43 +223,110 @@ public class Map extends javax.swing.JFrame {
         char[] sudo = {'x', 'o'};
         int T = TURN % 2;
         if (abs(x - y) % 2 == 0 && x != 1) {
+            /**
+             * x|?|x
+             * ?|?|?
+             * x|?|x
+             */
             if (game[x][y] == sudo[T] && game[(x + 1) % 3][y] == sudo[T] && game[(x + 2) % 3][y] == sudo[T]) {
+                /**
+                 * ?|?|?
+                 * ?|?|?
+                 * ?|?|?
+                 */
                 markWin(x, y, (x + 1) % 3, y, (x + 2) % 3, y);
                 end();
             } else if (game[x][y] == sudo[T] && game[x][(y + 1) % 3] == sudo[T] && game[x][(y + 2) % 3] == sudo[T]) {
+                /**
+                 * ?|?|?
+                 * ?|?|?
+                 * ?|?|?
+                 */
                 markWin(x, y, x, (y + 1) % 3, x, (y + 2) % 3);
                 end();
             }
             if (abs(x - y) == 0) {
                 if (game[x][y] == sudo[T] && game[(x + 1) % 3][(y + 1) % 3] == sudo[T] && game[(x + 2) % 3][(y + 2) % 3] == sudo[T]) {
+                    /**
+                     * ?|?|?
+                     * ?|?|?
+                     * ?|?|?
+                     */
                     markWin(x, y, (x + 1) % 3, (y + 1) % 3, (x + 2) % 3, (y + 2) % 3);
                     end();
                 }
             } else if (game[x][y] == sudo[T] && game[abs(x - 1) % 3][abs(y - 1) % 3] == sudo[T] && game[abs(x - 2) % 3][abs(y - 2) % 3] == sudo[T]) {
+                /**
+                 * ?|?|?
+                 * ?|?|?
+                 * ?|?|?
+                 */
                 markWin(x, y, abs(x - 1) % 3, abs(y - 1) % 3, abs(x - 2) % 3, abs(y - 2) % 3);
                 end();
             }
 
         } else if (abs(x - y) % 2 == 1) {
+            /**
+             * ?|x|?
+             * x|?|x
+             * ?|x|?
+             */
             if (game[x][y] == sudo[T] && game[(x + 1) % 3][y] == sudo[T] && game[(x + 2) % 3][y] == sudo[T]) {
+                /**
+                 * ?|?|?
+                 * ?|?|?
+                 * ?|?|?
+                 */
                 markWin(x, y, (x + 1) % 3, y, (x + 2) % 3, y);
                 end();
             } else if (game[x][y] == sudo[T] && game[x][(y + 1) % 3] == sudo[T] && game[x][(y + 2) % 3] == sudo[T]) {
+                /**
+                 * ?|?|?
+                 * ?|?|?
+                 * ?|?|?
+                 */
                 markWin(x, y, x, (y + 1) % 3, x, (y + 2) % 3);
                 end();
             }
-        } else if (game[1][0] == sudo[T] && game[1][1] == sudo[T] && game[1][2] == sudo[T]) {
-            markWin(1, 0, 1, 1, 1, 2);
-            end();
-        } else if (game[0][1] == sudo[T] && game[1][1] == sudo[T] && game[2][1] == sudo[T]) {
-            markWin(0, 1, 1, 1, 2, 1);
-            end();
-        } else if (game[0][0] == sudo[T] && game[1][1] == sudo[T] && game[2][2] == sudo[T]) {
-            markWin(0, 0, 1, 1, 2, 2);
-            end();
-        } else if (game[2][0] == sudo[T] && game[1][1] == sudo[T] && game[0][2] == sudo[T]) {
-            markWin(2, 0, 1, 1, 0, 2);
-            end();
+        } else{
+            /**
+             * ?|?|?
+             * ?|x|?
+             * ?|?|?
+             */
+            if (game[1][0] == sudo[T] && game[1][1] == sudo[T] && game[1][2] == sudo[T]) {
+                /**
+                 * ?|?|?
+                 * <|x|>
+                 * ?|?|?
+                 */
+                markWin(1, 0, 1, 1, 1, 2);
+                end();
+            } else if (game[0][1] == sudo[T] && game[1][1] == sudo[T] && game[2][1] == sudo[T]) {
+                /**
+                 * ?|^|?
+                 * ?|x|?
+                 * ?|v|?
+                 */
+                markWin(0, 1, 1, 1, 2, 1);
+                end();
+            } else if (game[0][0] == sudo[T] && game[1][1] == sudo[T] && game[2][2] == sudo[T]) {
+                /**
+                 * \|?|?
+                 * ?|x|?
+                 * ?|?|\
+                 */
+                markWin(0, 0, 1, 1, 2, 2);
+                end();
+            } else if (game[2][0] == sudo[T] && game[1][1] == sudo[T] && game[0][2] == sudo[T]) {
+                /**
+                 * ?|?|/
+                 * ?|x|?
+                 * /|?|?
+                 */
+                markWin(2, 0, 1, 1, 0, 2);
+                end();
+            }
         }
     }
 
